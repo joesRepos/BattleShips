@@ -6,9 +6,9 @@ public class BattleShips {
     }
 
     public static String[][] createBoard(int rows, int cols) {
-        String[][] board = new String[rows * 2][(cols * 2) + 2];
+        String[][] board = new String[rows][(cols * 2) + 2];
 
-        for (int i = 0; i < rows * 2; i++) {
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < (cols * 2) + 1; j++) {
                 if (j == cols) {
                     board[i][j] = "|";
@@ -22,10 +22,33 @@ public class BattleShips {
         return board;
     }
 
-    public static void displayBoard(String[][] board) {
+    public static void displayBoard(String[][] board, boolean left) {
+        System.out.print(" ");
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                System.out.print(board[i][j] + " ");
+                if (left && j == 0) {
+                    System.out.print((i + 1) + "\t" + board[i][j] + " ");
+                }
+                else if (!left && j == board.length * 2 + 1) {
+                    System.out.print(i + " " + board[i][j] + " ");
+                }
+                else {
+                    System.out.print(board[i][j] + " ");
+                }
+            }
+        }
+        System.out.print("\t");
+        for (int i = 0, j = 'A'; i < board.length * 2 + 5; i++) {
+            if (left && i < board.length) {
+              System.out.print( (char) j + " ");
+              j++;
+            }
+            else if (!left && i >= board.length + 5) {
+                System.out.print((char) j + " ");
+                j++;
+            }
+            else if (!left) {
+                System.out.print(" ");
             }
         }
     }
@@ -35,8 +58,9 @@ public class BattleShips {
         Scanner scanner = new Scanner(System.in);
         int rowsSize = 10;
         int columnsSize = 10;
+        boolean construction = true;
         String[][] gameBoard = createBoard(rowsSize, columnsSize);
-        displayBoard(gameBoard);
+        displayBoard(gameBoard, construction);
 
     }
 }
