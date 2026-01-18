@@ -51,6 +51,25 @@ public class BattleShips {
                 System.out.print(" ");
             }
         }
+        System.out.println("\n");
+    }
+
+    public static String[][] placeShips(String[][] board, int ships) {
+        displayBoard(board, true);
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < ships; i++) {
+            System.out.print("Next Ship:");
+            String coordString = scanner.nextLine();
+            String[] coords = coordString.split("\\s+");
+            if (coords.length == 2) {
+                board[Integer.parseInt(coords[1]) - 1][(int) coords[0].charAt(0) - 'A'] = "S";
+            }
+            else {
+                System.out.println("Wrong Formatting.");
+                i--;
+            }
+        }
+        return board;
     }
 
     public static void play() {
@@ -58,9 +77,10 @@ public class BattleShips {
         Scanner scanner = new Scanner(System.in);
         int rowsSize = 10;
         int columnsSize = 10;
-        boolean construction = true;
+        int shipNo = 2;
         String[][] gameBoard = createBoard(rowsSize, columnsSize);
-        displayBoard(gameBoard, construction);
+        gameBoard = placeShips(gameBoard, shipNo);
+        displayBoard(gameBoard, false);
 
     }
 }
