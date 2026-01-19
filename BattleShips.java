@@ -72,6 +72,20 @@ public class BattleShips {
         return board;
     }
 
+    public static String[][] playerGuess(String[][] board, int rowsSize) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Next Guess: ");
+        String coordString = scanner.nextLine();
+        String[] coords = coordString.split("\\s+");
+            if (coords.length == 2) {
+                int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
+                if (board[Integer.parseInt(coords[1]) - 1][coordY] == "S") {
+                    board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                }
+            }
+        return board;
+    }
+
     public static void play() {
         System.out.println("Welcome to Battle Ships!");
         Scanner scanner = new Scanner(System.in);
@@ -81,6 +95,9 @@ public class BattleShips {
         String[][] gameBoard = createBoard(rowsSize, columnsSize);
         gameBoard = placeShips(gameBoard, shipNo);
         displayBoard(gameBoard, false);
+        while (shipNo > 0) {
+            gameBoard = playerGuess(gameBoard, rowsSize);
+        }
 
     }
 }
