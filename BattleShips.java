@@ -72,15 +72,17 @@ public class BattleShips {
         return board;
     }
 
-    public static String[][] playerGuess(String[][] board, int rowsSize) {
+    public static String[][] playerGuess(String[][] board, int rowsSize, String[] enemyPos) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Next Guess: ");
         String coordString = scanner.nextLine();
         String[] coords = coordString.split("\\s+");
             if (coords.length == 2) {
-                int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
-                if (board[Integer.parseInt(coords[1]) - 1][coordY] == "S") {
-                    board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                for (int i = 0; i < enemyPos.length; i++) {
+                    if (coordString == enemyPos[i]) {
+                        int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
+                        board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                    }
                 }
             }
         return board;
@@ -92,11 +94,12 @@ public class BattleShips {
         int rowsSize = 10;
         int columnsSize = 10;
         int shipNo = 2;
+        String[] enemyCoords = {"A 1", "B 1"};
         String[][] gameBoard = createBoard(rowsSize, columnsSize);
         gameBoard = placeShips(gameBoard, shipNo);
         displayBoard(gameBoard, false);
         while (shipNo > 0) {
-            gameBoard = playerGuess(gameBoard, rowsSize);
+            gameBoard = playerGuess(gameBoard, rowsSize, enemyCoords);
         }
 
     }
