@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class BattleShips {
@@ -72,6 +73,27 @@ public class BattleShips {
         return board;
     }
 
+    public static String[] placeEnemyShips(int rows, int cols, int ships) {
+        String[] enemyShips = new String[ships];
+        String xcoords = "";
+        String ycoords = "";
+        Random rand = new Random();
+        for (int i = 0; i < ships; i++) {
+            String currentX = String.valueOf((char) ('A' + rand.nextInt(cols)));
+            String currentY = String.valueOf(rand.nextInt(rows));
+            if (!xcoords.contains(currentX) && !ycoords.contains(currentY)) {
+                xcoords += currentX;
+                ycoords += currentY;
+                enemyShips[i] = currentX + " " + currentY;
+            }
+            else {
+                i--;
+            }
+        }
+        return enemyShips;
+
+    }
+
     public static String[][] playerGuess(String[][] board, int rowsSize, String[] enemyPos) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Next Guess: ");
@@ -94,9 +116,10 @@ public class BattleShips {
         int rowsSize = 10;
         int columnsSize = 10;
         int shipNo = 2;
-        String[] enemyCoords = {"A 1", "B 1"};
+        String[] enemyCoords = placeEnemyShips(rowsSize, columnsSize, shipNo);
         String[][] gameBoard = createBoard(rowsSize, columnsSize);
         gameBoard = placeShips(gameBoard, shipNo);
+
         displayBoard(gameBoard, false);
         while (shipNo > 0) {
             gameBoard = playerGuess(gameBoard, rowsSize, enemyCoords);
