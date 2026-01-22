@@ -58,6 +58,7 @@ public class BattleShips {
     public static String[][] placeShips(String[][] board, int ships) {
         displayBoard(board, true);
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Place your ships! (Format:X-CORD [SPACE] Y-CORD");
         for (int i = 0; i < ships; i++) {
             System.out.print("Next Ship:");
             String coordString = scanner.nextLine();
@@ -120,8 +121,9 @@ public class BattleShips {
         String[][] gameBoard = createBoard(rowsSize, columnsSize);
         gameBoard = placeShips(gameBoard, shipNo);
 
-        displayBoard(gameBoard, false);
+
         while (shipNo > 0) {
+            displayBoard(gameBoard, false);
             gameBoard = playerGuess(gameBoard, rowsSize, enemyCoords);
         }
 
