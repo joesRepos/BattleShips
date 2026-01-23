@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -111,6 +112,22 @@ public class BattleShips {
         return board;
     }
 
+    public static ArrayList<String> enemyGuess(String[][] board, ArrayList<String> known, int rows, int cols) {
+        Random rand = new Random();
+        int intGuessY = rand.nextInt(cols);
+        String guessX = String.valueOf((char) ('A' + intGuessY));
+        String guessY = String.valueOf(rand.nextInt(rows));
+        String currentGuess = guessX + " " + guessY;
+
+        if (known.contains(currentGuess)) {
+            known = enemyGuess(board, known, rows, cols);
+            return known;
+        }
+        
+        known.add(currentGuess);
+        return known;
+    }
+
     public static void play() {
         System.out.println("Welcome to Battle Ships!");
         Scanner scanner = new Scanner(System.in);
@@ -119,6 +136,7 @@ public class BattleShips {
         int shipNo = 2;
         String[] enemyCoords = placeEnemyShips(rowsSize, columnsSize, shipNo);
         String[][] gameBoard = createBoard(rowsSize, columnsSize);
+        ArrayList<String> enemyKnowledge = new ArrayList<>();
         gameBoard = placeShips(gameBoard, shipNo);
 
 
