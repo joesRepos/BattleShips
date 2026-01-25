@@ -128,6 +128,17 @@ public class BattleShips {
         return known;
     }
 
+    public static String[][] displayEnemyHit(String[][] board, ArrayList<String> known) {
+
+        for (int i = 0; i < known.size(); i++) {
+            String[] positions = known.get(i).split(" ");
+
+            board['A' - positions[0].charAt(0)][Integer.valueOf(positions[1])] = "D";
+        }
+        
+        return board;
+    }
+
     public static void play() {
         System.out.println("Welcome to Battle Ships!");
         Scanner scanner = new Scanner(System.in);
@@ -143,6 +154,8 @@ public class BattleShips {
         while (shipNo > 0) {
             displayBoard(gameBoard, false);
             gameBoard = playerGuess(gameBoard, rowsSize, enemyCoords);
+            enemyKnowledge = enemyGuess(gameBoard, enemyKnowledge, rowsSize, columnsSize);
+            gameBoard = displayEnemyHit(gameBoard, enemyKnowledge);
         }
 
     }
