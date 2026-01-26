@@ -139,9 +139,20 @@ public class BattleShips {
         return board;
     }
 
+    public static boolean checkWin(String[][] board, int boats) {
+        int count = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == "X") {
+                    count++;
+                }
+            }
+        }
+        return count >= boats;
+    }
+
     public static void play() {
         System.out.println("Welcome to Battle Ships!");
-        Scanner scanner = new Scanner(System.in);
         int rowsSize = 10;
         int columnsSize = 10;
         int shipNo = 2;
@@ -151,11 +162,18 @@ public class BattleShips {
         gameBoard = placeShips(gameBoard, shipNo);
 
 
-        while (shipNo > 0) {
+        while (shipNo > enemyKnowledge.size() && !checkWin(gameBoard, shipNo)) {
             displayBoard(gameBoard, false);
             gameBoard = playerGuess(gameBoard, rowsSize, enemyCoords);
             enemyKnowledge = enemyGuess(gameBoard, enemyKnowledge, rowsSize, columnsSize);
             gameBoard = displayEnemyHit(gameBoard, enemyKnowledge);
+        }
+
+        if (shipNo <= enemyKnowledge.size()) {
+            System.out.println("GAME OVER");
+        }
+        else {
+            System.out.println("You Win!");
         }
 
     }
