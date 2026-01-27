@@ -101,11 +101,14 @@ public class BattleShips {
         System.out.print("Next Guess: ");
         String coordString = scanner.nextLine();
         String[] coords = coordString.split("\\s+");
+        int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
             if (coords.length == 2) {
                 for (int i = 0; i < enemyPos.length; i++) {
                     if (coordString == enemyPos[i]) {
-                        int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
                         board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                    }
+                    else {
+                        board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
                     }
                 }
             }
