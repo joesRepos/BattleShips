@@ -135,8 +135,12 @@ public class BattleShips {
 
         for (int i = 0; i < known.size(); i++) {
             String[] positions = known.get(i).split(" ");
-
-            board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] = "D";
+            if (board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] == "S") {
+                board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] = "D";
+            }
+            else {
+                board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] = "A";
+            }
         }
         
         return board;
