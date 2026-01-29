@@ -146,16 +146,25 @@ public class BattleShips {
         return board;
     }
 
-    public static boolean checkWin(String[][] board, int boats) {
+    public static int checkWin(String[][] board, int boats) {
         int count = 0;
+        int countEnemy= 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] == "X") {
                     count++;
+                }else if (board[i][j] == "D") {
+                    countEnemy++;
                 }
             }
         }
-        return count >= boats;
+        if (countEnemy >= boats) {
+            return 1;
+        }
+        else if (count >=boats) {
+            return 2;
+        }
+        return 0;
     }
 
     public static void play() {
@@ -169,14 +178,14 @@ public class BattleShips {
         gameBoard = placeShips(gameBoard, shipNo);
 
 
-        while (shipNo > enemyKnowledge.size() && !checkWin(gameBoard, shipNo)) {
+        while (checkWin(gameBoard, shipNo) == 0) {
             displayBoard(gameBoard, false);
             gameBoard = playerGuess(gameBoard, rowsSize, enemyCoords);
             enemyKnowledge = enemyGuess(gameBoard, enemyKnowledge, rowsSize, columnsSize);
             gameBoard = displayEnemyHit(gameBoard, enemyKnowledge);
         }
 
-        if (shipNo <= enemyKnowledge.size()) {
+        if (checkWin(gameBoard, shipNo) == 0) {
             System.out.println("GAME OVER");
         }
         else {
