@@ -63,6 +63,9 @@ public class BattleShips {
         for (int i = 0; i < ships; i++) {
             System.out.print("Next Ship:");
             String coordString = scanner.nextLine();
+            if (coordString == "EXIT") {
+                System.exit(0);
+            }
             String[] coords = coordString.split("\\s+");
             if (coords.length == 2) {
                 board[Integer.parseInt(coords[1]) - 1][(int) coords[0].charAt(0) - 'A'] = "S";
@@ -100,6 +103,9 @@ public class BattleShips {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Next Guess: ");
         String coordString = scanner.nextLine();
+        if (coordString == "EXIT") {
+            System.exit(0);
+        }
         String[] coords = coordString.split("\\s+");
         int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
             if (coords.length == 2) {
@@ -146,7 +152,7 @@ public class BattleShips {
         return board;
     }
 
-    public static int checkWin(String[][] board, int boats) {
+    public static int checkWinState(String[][] board, int boats) {
         int count = 0;
         int countEnemy= 0;
         for (int i = 0; i < board.length; i++) {
@@ -177,15 +183,16 @@ public class BattleShips {
         ArrayList<String> enemyKnowledge = new ArrayList<>();
         gameBoard = placeShips(gameBoard, shipNo);
 
-
-        while (checkWin(gameBoard, shipNo) == 0) {
+        int winSate = 0;
+        while (winSate == 0) {
             displayBoard(gameBoard, false);
             gameBoard = playerGuess(gameBoard, rowsSize, enemyCoords);
             enemyKnowledge = enemyGuess(gameBoard, enemyKnowledge, rowsSize, columnsSize);
             gameBoard = displayEnemyHit(gameBoard, enemyKnowledge);
+            winSate = checkWinState(gameBoard, shipNo);
         }
 
-        if (checkWin(gameBoard, shipNo) == 0) {
+        if (winSate == 1) {
             System.out.println("GAME OVER");
         }
         else {
