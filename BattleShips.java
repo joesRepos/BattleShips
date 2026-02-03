@@ -112,9 +112,11 @@ public class BattleShips {
                 for (int i = 0; i < enemyPos.length; i++) {
                     if (coordString == enemyPos[i]) {
                         board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                        System.out.println("You sank a ship!");
                     }
                     else {
                         board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
+                        System.out.println("You missed.");
                     }
                 }
             }
