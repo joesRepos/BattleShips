@@ -68,7 +68,14 @@ public class BattleShips {
             }
             String[] coords = coordString.split("\\s+");
             if (coords.length == 2) {
-                board[Integer.parseInt(coords[1]) - 1][(int) coords[0].charAt(0) - 'A'] = "S";
+                try {
+                    board[Integer.parseInt(coords[1]) - 1][(int) coords[0].charAt(0) - 'A'] = "S";
+                }
+                catch (Exception e) {
+                    System.out.println("Wrong Formatting.");
+                    i--;
+                }
+                
             }
             else {
                 System.out.println("Wrong Formatting.");
@@ -106,19 +113,25 @@ public class BattleShips {
         if (coordString == "EXIT") {
             System.exit(0);
         }
-        String[] coords = coordString.split("\\s+");
-        int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
-            if (coords.length == 2) {
-                for (int i = 0; i < enemyPos.length; i++) {
-                    if (coordString == enemyPos[i]) {
-                        board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
-                        System.out.println("You sank a ship!");
-                    }
-                    else {
-                        board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
-                        System.out.println("You missed.");
+        try {
+            String[] coords = coordString.split("\\s+");
+            int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
+                if (coords.length == 2) {
+                    for (int i = 0; i < enemyPos.length; i++) {
+                        if (coordString == enemyPos[i]) {
+                            board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                            System.out.println("You sank a ship!");
+                        }
+                        else {
+                            board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
+                            System.out.println("You missed.");
+                        }
                     }
                 }
+            }
+            catch (Exception e) {
+                System.out.println("Wrong formatting.");
+                playerGuess(board, rowsSize, enemyPos);
             }
         return board;
     }
