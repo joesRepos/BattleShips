@@ -7,6 +7,12 @@ public class BattleShips {
         play();
     }
 
+    /**
+     * Creates the board at the specified size.
+     * @param rows the number of rows.
+     * @param cols the number of columns.
+     * @return the created board.
+     */
     public static String[][] createBoard(int rows, int cols) {
         String[][] board = new String[rows][(cols * 2) + 2];
 
@@ -24,6 +30,11 @@ public class BattleShips {
         return board;
     }
 
+    /**
+     * Displays the current state of the game displaying the co-ordinates at the correct side.
+     * @param board the game board current state.
+     * @param left boolean of of the coordinate side.
+     */
     public static void displayBoard(String[][] board, boolean left) {
         System.out.print(" ");
         for (int i = 0; i < board.length; i++) {
@@ -56,6 +67,12 @@ public class BattleShips {
         System.out.println("\n");
     }
 
+    /**
+     * From the players input, places the player ships.
+     * @param board the current state of the board.
+     * @param ships the number of ships in play.
+     * @return the new state of the board.
+     */
     public static String[][] placeShips(String[][] board, int ships) {
         displayBoard(board, true);
         Scanner scanner = new Scanner(System.in);
@@ -85,6 +102,13 @@ public class BattleShips {
         return board;
     }
 
+    /**
+     * Places the enemy ships randomly.
+     * @param rows the number of rows.
+     * @param cols the number of columns.
+     * @param ships the number of ships in play.
+     * @return the array of enemy ship positions.
+     */
     public static String[] placeEnemyShips(int rows, int cols, int ships) {
         String[] enemyShips = new String[ships];
         String xcoords = "";
@@ -106,6 +130,13 @@ public class BattleShips {
 
     }
 
+    /**
+     * The players go on the game.
+     * @param board the current board state.
+     * @param rowsSize the row size.
+     * @param enemyPos the array of enenemy positions.
+     * @return the new state of the board.
+     */
     public static String[][] playerGuess(String[][] board, int rowsSize, String[] enemyPos) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Next Guess: ");
@@ -136,6 +167,14 @@ public class BattleShips {
         return board;
     }
 
+    /**
+     * Plays an enemy guess.
+     * @param board the current board state.
+     * @param known a list of known information by the enemey.
+     * @param rows the number of rows.
+     * @param cols the number of columns.
+     * @return the list of information known to the enemy.
+     */
     public static ArrayList<String> enemyGuess(String[][] board, ArrayList<String> known, int rows, int cols) {
         Random rand = new Random();
         int intGuessY = rand.nextInt(cols);
@@ -152,6 +191,12 @@ public class BattleShips {
         return known;
     }
 
+    /**
+     * Maps the enemy plays to the board.
+     * @param board the current state of the board.
+     * @param known the list of known information by the enemy.
+     * @return the new state of the board.
+     */
     public static String[][] displayEnemyHit(String[][] board, ArrayList<String> known) {
 
         for (int i = 0; i < known.size(); i++) {
@@ -167,6 +212,12 @@ public class BattleShips {
         return board;
     }
 
+    /**
+     * Check for if the game is finished and if so, who has won.
+     * @param board the current state of the board.
+     * @param boats the number of boats in play.
+     * @return
+     */
     public static int checkWinState(String[][] board, int boats) {
         int count = 0;
         int countEnemy= 0;
@@ -188,6 +239,9 @@ public class BattleShips {
         return 0;
     }
 
+    /**
+     * Plays the game.
+     */
     public static void play() {
         System.out.println("Welcome to Battle Ships!");
         int rowsSize = 10;
