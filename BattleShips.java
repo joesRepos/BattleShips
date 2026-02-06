@@ -16,6 +16,7 @@ public class BattleShips {
     public static String[][] createBoard(int rows, int cols) {
         String[][] board = new String[rows][(cols * 2) + 2];
 
+        // Loops over for the size of the board with a nested loop.
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < (cols * 2) + 1; j++) {
                 if (j == cols) {
@@ -37,6 +38,7 @@ public class BattleShips {
      */
     public static void displayBoard(String[][] board, boolean left) {
         System.out.print(" ");
+        // Loops over the board.
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (left && j == 0) {
@@ -51,6 +53,7 @@ public class BattleShips {
             }
         }
         System.out.print("\t");
+        // Loops over the length for the coordinates.
         for (int i = 0, j = 'A'; i < board.length * 2 + 5; i++) {
             if (left && i < board.length) {
               System.out.print( (char) j + " ");
@@ -77,6 +80,8 @@ public class BattleShips {
         displayBoard(board, true);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Place your ships! (Format:X-CORD [SPACE] Y-CORD");
+
+        // Loops for the number of ships to be placed on the board.
         for (int i = 0; i < ships; i++) {
             System.out.print("Next Ship:");
             String coordString = scanner.nextLine();
@@ -86,6 +91,7 @@ public class BattleShips {
             String[] coords = coordString.split("\\s+");
             if (coords.length == 2) {
                 try {
+                    // Places the S at where the player specifies.
                     board[Integer.parseInt(coords[1]) - 1][(int) coords[0].charAt(0) - 'A'] = "S";
                 }
                 catch (Exception e) {
@@ -114,9 +120,12 @@ public class BattleShips {
         String xcoords = "";
         String ycoords = "";
         Random rand = new Random();
+        // Loops forthe number of ships to be placed.
         for (int i = 0; i < ships; i++) {
+            // Gets random coordinates.
             String currentX = String.valueOf((char) ('A' + rand.nextInt(cols)));
             String currentY = String.valueOf(rand.nextInt(rows));
+            // Checks the new coordinates are unique for the enemy.
             if (!xcoords.contains(currentX) && !ycoords.contains(currentY)) {
                 xcoords += currentX;
                 ycoords += currentY;
@@ -147,23 +156,24 @@ public class BattleShips {
         try {
             String[] coords = coordString.split("\\s+");
             int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
-                if (coords.length == 2) {
-                    for (int i = 0; i < enemyPos.length; i++) {
-                        if (coordString == enemyPos[i]) {
-                            board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
-                            System.out.println("You sank a ship!");
-                        }
-                        else {
-                            board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
-                            System.out.println("You missed.");
-                        }
+            // Makes sure the correct number of inputs have been entered.
+            if (coords.length == 2) {
+                for (int i = 0; i < enemyPos.length; i++) {
+                    if (coordString == enemyPos[i]) {
+                        board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                        System.out.println("You sank a ship!");
+                    }
+                    else {
+                        board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
+                        System.out.println("You missed.");
                     }
                 }
             }
-            catch (Exception e) {
-                System.out.println("Wrong formatting.");
-                playerGuess(board, rowsSize, enemyPos);
-            }
+        }
+        catch (Exception e) {
+            System.out.println("Wrong formatting.");
+            playerGuess(board, rowsSize, enemyPos);
+        }
         return board;
     }
 
@@ -178,10 +188,12 @@ public class BattleShips {
     public static ArrayList<String> enemyGuess(String[][] board, ArrayList<String> known, int rows, int cols) {
         Random rand = new Random();
         int intGuessY = rand.nextInt(cols);
+        // Gets a random guess for the enemy.
         String guessX = String.valueOf((char) ('A' + intGuessY));
         String guessY = String.valueOf(rand.nextInt(rows));
         String currentGuess = guessX + " " + guessY;
 
+        // Recursively calls the function if the guess has already been made. 
         if (known.contains(currentGuess)) {
             known = enemyGuess(board, known, rows, cols);
             return known;
@@ -218,9 +230,11 @@ public class BattleShips {
      * @param boats the number of boats in play.
      * @return
      */
-    public static int checkWinState(String[][] board, int boats) {
+    public static int checkWinState(String[][] board, int ships) {
         int count = 0;
         int countEnemy= 0;
+
+        // Loops over the board and counts the number of enemy and player hits.
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] == "X") {
@@ -230,10 +244,10 @@ public class BattleShips {
                 }
             }
         }
-        if (countEnemy >= boats) {
+        if (countEnemy >= ships) {
             return 1;
         }
-        else if (count >=boats) {
+        else if (count >= ships) {
             return 2;
         }
         return 0;
