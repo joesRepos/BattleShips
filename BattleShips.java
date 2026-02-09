@@ -217,7 +217,7 @@ public class BattleShips {
                 board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] = "D";
             }
             else {
-                board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] = "A";
+                board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] = "I";
             }
         }
         
@@ -258,6 +258,11 @@ public class BattleShips {
      */
     public static void play() {
         System.out.println("Welcome to Battle Ships!");
+        System.out.println("Your ships will be displayedwith an \"S\"");
+        System.err.println("If an an enemy hits your ship it will change to a \"D\"");
+        System.out.println("Any missed shot by you or the enemy will be displayed with an \"I\"");
+        System.out.println("If you sink an enemy ship, it will change to an \"X\"");
+
         int rowsSize = 10;
         int columnsSize = 10;
         int shipNo = 2;
