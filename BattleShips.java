@@ -85,7 +85,7 @@ public class BattleShips {
         for (int i = 0; i < ships; i++) {
             System.out.print("Next Ship:");
             String coordString = scanner.nextLine();
-            if (coordString == "EXIT") {
+            if (coordString.equals("EXIT")) {
                 System.exit(0);
             }
             String[] coords = coordString.split("\\s+");
@@ -150,7 +150,7 @@ public class BattleShips {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Next Guess: ");
         String coordString = scanner.nextLine();
-        if (coordString == "EXIT") {
+        if (coordString.equals("EXIT")) {
             System.exit(0);
         }
         try {
@@ -159,7 +159,7 @@ public class BattleShips {
             // Makes sure the correct number of inputs have been entered.
             if (coords.length == 2) {
                 for (int i = 0; i < enemyPos.length; i++) {
-                    if (coordString == enemyPos[i]) {
+                    if (coordString.equals(enemyPos[i])) {
                         board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
                         System.out.println("You sank a ship!");
                     }
@@ -213,7 +213,7 @@ public class BattleShips {
 
         for (int i = 0; i < known.size(); i++) {
             String[] positions = known.get(i).split(" ");
-            if (board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] == "S") {
+            if (board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])].equals("S")) {
                 board[positions[0].charAt(0) - 'A'][Integer.valueOf(positions[1])] = "D";
             }
             else {
@@ -237,9 +237,9 @@ public class BattleShips {
         // Loops over the board and counts the number of enemy and player hits.
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] == "X") {
+                if (board[i][j].equals("X")) {
                     count++;
-                }else if (board[i][j] == "D") {
+                }else if (board[i][j].equals("D")) {
                     countEnemy++;
                 }
             }
