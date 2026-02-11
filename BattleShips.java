@@ -158,15 +158,22 @@ public class BattleShips {
             int coordY = (int) coords[0].charAt(0) - 'A' + rowsSize + 1;
             // Makes sure the correct number of inputs have been entered.
             if (coords.length == 2) {
+
+                boolean hit = false;
+
                 for (int i = 0; i < enemyPos.length; i++) {
                     if (coordString.equals(enemyPos[i])) {
-                        board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
-                        System.out.println("You sank a ship!");
+                        hit = true;
+                        break;
                     }
-                    else {
-                        board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
-                        System.out.println("You missed.");
-                    }
+                }
+                if (hit) {
+                    board[Integer.parseInt(coords[1]) - 1][coordY] = "X";
+                    System.out.println("You sank a ship!");
+                }
+                else {
+                    board[Integer.parseInt(coords[1]) - 1][coordY] = "I";
+                    System.out.println("You missed.");
                 }
             }
         }
