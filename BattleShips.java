@@ -125,14 +125,21 @@ public class BattleShips {
             // Gets random coordinates.
             String currentX = String.valueOf((char) ('A' + rand.nextInt(cols)));
             String currentY = String.valueOf(rand.nextInt(rows));
-            // Checks the new coordinates are unique for the enemy.
-            if (!xcoords.contains(currentX) && !ycoords.contains(currentY)) {
-                xcoords += currentX;
-                ycoords += currentY;
-                enemyShips[i] = currentX + " " + currentY;
+            String currentPos = currentX + " " + currentY;
+            boolean exists = false;
+
+            // Loop over the current ships placed.
+            for (int j = 0; j < i; j++) {
+                if (enemyShips[j] != null && enemyShips[j].equals(currentPos)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (exists) {
+                i--;
             }
             else {
-                i--;
+                enemyShips[i] = currentPos;
             }
         }
         return enemyShips;
