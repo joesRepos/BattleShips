@@ -166,6 +166,13 @@ public class BattleShips {
             // Makes sure the correct number of inputs have been entered.
             if (coords.length == 2) {
 
+                // Checks if the player has already made this guess.
+                int row = Integer.parseInt(coords[1]) - 1;
+                if (board[row][coordY].equals("X") || board[row][coordY].equals("Y")) {
+                    System.out.println("You've already made that guess, try again.");
+                    // Recursively call the function to allow them to guess again.
+                    return playerGuess(board, rowsSize, enemyPos);
+                }
                 boolean hit = false;
 
                 for (int i = 0; i < enemyPos.length; i++) {
